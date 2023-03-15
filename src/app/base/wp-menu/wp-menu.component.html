@@ -1,0 +1,37 @@
+<div>
+  <ul>
+    <li *ngFor="let item of menu;let i = index">
+      <div>
+        <span *ngIf="item.icon"
+          ><img
+            [src]="'assets/images/menu/' + (item.icon || 'default') + '.png'"
+            alt="icon"
+        /></span>
+        <!-- <a [routerLink]="[item.link]" routerLinkActive="router-link-active">{{
+          item.text
+        }}</a> -->
+        <a data-toggle="collapse" [attr.data-target]="'#menuItem'+i" role="button" aria-expanded="true">{{
+          item.text
+        }}</a>
+        <ul *ngIf="item.children" class="collapse" [id]="'menuItem'+i">
+          <li *ngFor="let subItem of item.children">
+            <div>
+              <span *ngIf="subItem.icon"
+                ><img
+                  [src]="
+                    'assets/images/menu/' + (subItem.icon || 'default') + '.png'
+                  "
+                  alt="icon"
+              /></span>
+              <a
+                [routerLink]="[subItem.link]"
+                routerLinkActive="router-link-active"
+                >{{ subItem.text }}</a
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
