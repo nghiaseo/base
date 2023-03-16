@@ -5,6 +5,10 @@ import { RouterModule,Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { WpMenuComponent } from './base/wp-menu/wp-menu.component';
 const routes: Routes = [
+  {
+    path:':id',
+    component:AppComponent
+  }
 ];
 
 @NgModule({

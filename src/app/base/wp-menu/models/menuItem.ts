@@ -3,5 +3,6 @@ export interface MenuItem{
   text:string,
   link:string,
   children?:MenuItem[],
-  class?:string
+  class?:string,
+  expanded?:boolean
 }

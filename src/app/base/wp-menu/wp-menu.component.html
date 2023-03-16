@@ -1,37 +1,59 @@
-<div>
+<div class="wp-menu">
   <ul>
-    <li *ngFor="let item of menu;let i = index">
+    <li
+      *ngFor="let item of menu; let i = index"
+      [ngClass]="item.children ? 'parrent' : ''"
+    >
       <div>
-        <span *ngIf="item.icon"
-          ><img
-            [src]="'assets/images/menu/' + (item.icon || 'default') + '.png'"
-            alt="icon"
-        /></span>
-        <!-- <a [routerLink]="[item.link]" routerLinkActive="router-link-active">{{
-          item.text
-        }}</a> -->
-        <a data-toggle="collapse" [attr.data-target]="'#menuItem'+i" role="button" aria-expanded="true">{{
-          item.text
-        }}</a>
-        <ul *ngIf="item.children" class="collapse" [id]="'menuItem'+i">
-          <li *ngFor="let subItem of item.children">
-            <div>
-              <span *ngIf="subItem.icon"
-                ><img
-                  [src]="
-                    'assets/images/menu/' + (subItem.icon || 'default') + '.png'
-                  "
-                  alt="icon"
-              /></span>
-              <a
-                [routerLink]="[subItem.link]"
-                routerLinkActive="router-link-active"
-                >{{ subItem.text }}</a
-              >
-            </div>
-          </li>
-        </ul>
+        <a
+          class="wp-menu-item"
+          [ngClass]="item.expanded ? '' : 'collapsed'"
+          data-toggle="collapse"
+          [attr.data-target]="'#menuItem' + i"
+          role="button"
+          *ngIf="item.children; else linkItem"
+        >
+          <span *ngIf="item.icon; else defaultIcon" class="wp-menu-icon"
+            ><img [src]="'assets/images/menu/' + item.icon + '.png'" alt="icon"
+          /></span>
+          <span class="wp-menu-text"> {{ item.text }}</span>
+          <span class="caret"
+            ><img src="assets/images/menu/caret.png" alt="caret"
+          /></span>
+        </a>
+        <ng-template #linkItem>
+          <a class="wp-menu-item" [routerLink]="[item.link]">
+            <span *ngIf="item.icon; else defaultIcon" class="wp-menu-icon"
+              ><img
+                [src]="'assets/images/menu/' + item.icon + '.png'"
+                alt="icon" /></span
+            ><span class="wp-menu-text"> {{ item.text }}</span></a
+          >
+        </ng-template>
       </div>
+      <ul
+        *ngIf="item.children"
+        class="collapse"
+        [ngClass]="item.expanded ? 'show' : ''"
+        [id]="'menuItem' + i"
+      >
+        <li *ngFor="let subItem of item.children">
+          <div>
+            <a class="wp-menu-item" [routerLink]="[subItem.link]">
+              <!-- <span *ngIf="subItem.icon; else defaultIcon" class="wp-menu-icon"
+                ><img
+                  [src]="'assets/images/menu/' + subItem.icon + '.png'"
+                  alt="icon" /></span> -->
+              <span class="wp-menu-text"> {{ subItem.text }}</span></a
+            >
+          </div>
+        </li>
+      </ul>
     </li>
   </ul>
 </div>
+<ng-template #defaultIcon>
+  <span class="wp-menu-icon"
+    ><img [src]="'assets/images/menu/default.png'" alt="icon" />
+  </span>
+</ng-template>
